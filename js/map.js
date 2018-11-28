@@ -127,7 +127,6 @@ var generatePin = function (add) {
 };
 // Отрисовка
 var drawPins = function (add) {
-  var template = document.querySelector('#pin');
   var map = document.querySelector('.map__pins');
   for (var i = 0; i < add.length; i++) {
     var pin = generatePin(add[i]);
