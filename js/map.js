@@ -58,27 +58,31 @@ var getRandomIndex = function (arr) {
 };
 
 var generateAvatar = function () {
-  var resultAvatar = [];
+  var result = [];
   for (var i = 1; i <= OBJ_QUANTITY; i++) {
-    var avatar = '../img/avatars/user0' + i + '.png';
-    resultAvatar.push(avatar);
+    var avatar = 'img/avatars/user0' + i + '.png';
+    result.push(avatar);
   }
-  return resultAvatar;
+  return result;
 };
-var generateTitle = function () {
-  for (var i = 0; i <= OBJ_QUANTITY; i++) {
+/* var generateTitle = function () {
+  for (var i = 0; i < OBJ_QUANTITY; i++) {
     var title = LIST_TITLE[i];
   }
   return title;
-};
 
+};*/
+var getRandomItem = function (arr) {
+  var index = getRandomIndex(arr);
+  return arr[index];
+};
 var generateObj = function () {
   return {
     author: {
-      avatar: generateAvatar()
+      avatar: getRandomItem(generateAvatar())
     },
     offer: {
-      title: generateTitle(),
+      title: getRandomItem(LIST_TITLE),
       address: getRandomNumber(250, 850) + ', ' + getRandomNumber(130, 630),
       price: getRandomNumber(1000, 1000000),
       type: getRandomIndex(TYPES),
@@ -98,18 +102,19 @@ var generateObj = function () {
     }
   };
 };
+var objList = generateObj();
+// console.log(obj);
 
 var generateArray = function () {
   var result = [];
   for (var i = 0; i <= OBJ_QUANTITY; i++) {
-    result.push(generateObj);
+    var object = generateObj();
+    result.push(object);
   }
   return result;
 };
-
-// Убираем класс .map--faded у блока .map
-var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+var arrList = generateArray();
+// console.log(generateArray());
 
 // DOM-элементы для меток
 var generatePin = function (add) {
@@ -120,6 +125,20 @@ var generatePin = function (add) {
   element.querySelector('img').alt = add.offer.title;
   return element;
 };
+// Отрисовка
+var drawPins = function (add) {
+  var template = document.querySelector('#pin');
+  var map = document.querySelector('.map__pins');
+  for (var i = 0; i < add.length; i++) {
+    var pin = generatePin(add[i]);
+    map.appendChild(pin);
+  }
+};
 
-generateArray(); // чтобы тревис не ругался
-generatePin(); // чтобы тревис не ругался
+generateArray(OBJ_QUANTITY);
+generatePin(objList);
+drawPins(arrList);
+
+// Убираем класс .map--faded у блока .map
+var map = document.querySelector('.map');
+map.classList.remove('map--faded');
