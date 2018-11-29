@@ -190,7 +190,7 @@ var renderCard = function (add) {
   var card = document.querySelector('#card');
   var map = document.querySelector('.map');
   var containerBefore = document.querySelector('.map__filters-container');
-  var advCard = generateCard(add[0], card);
+  var advCard = generateCard(add[0]);
   map.insertBefore(advCard, containerBefore);
 };
 
