@@ -65,13 +65,7 @@ var generateAvatar = function () {
   }
   return result;
 };
-/* var generateTitle = function () {
-  for (var i = 0; i < OBJ_QUANTITY; i++) {
-    var title = LIST_TITLE[i];
-  }
-  return title;
 
-};*/
 var getRandomItem = function (arr) {
   var index = getRandomIndex(arr);
   return arr[index];
@@ -114,7 +108,7 @@ var generateArray = function () {
   return result;
 };
 var arrList = generateArray();
-// console.log(generateArray());
+// console.log(arrList);
 
 // DOM-элементы для меток
 var generatePin = function (add) {
@@ -134,9 +128,76 @@ var drawPins = function (add) {
   }
 };
 
+var renderType = function () {
+  var types = {
+    palace: 'Дворец',
+    flat: 'Квартира',
+    house: 'Дом',
+    bungalo: 'Бунгало'
+  };
+  return types;
+};
+
+var fillFeatures = function (features, arr) {
+  features.innerHTML = '';
+  for (var i = 0; i < arr.offer.features.length; i++) {
+    var cardFeaturesItem = document.createElement('li');
+    cardFeaturesItem.classList.add('popup__feature');
+    cardFeaturesItem.classList.add('popup__feature--' + arr.offer.features[i]);
+    features.appendChild(cardFeaturesItem);
+  }
+};
+
+var generateCard = function (add) {
+  var title = document.querySelector('.popup__title');
+  title.textContent = add.offer.title;
+
+  var address = document.querySelector('.popup__text--address');
+  address.textContent = add.offer.address;
+
+  var price = document.querySelector('.popup__text--price');
+  price.textContent = add.offer.price + '₽/ночь';
+
+  var type = document.querySelector('.popup__type');
+  type.textContent = renderType(add.offer.type);
+
+  var room = document.querySelector('.popup__text--capacity');
+  room.textContent = add.offer.rooms + ' комнаты для ' + add.offer.guests + ' гостей';
+
+  var check = document.querySelector('.popup__text--time');
+  check.textContent = 'Заезд после ' + add.offer.checkin + ', выезд до ' + add.offer.checkout;
+
+  var features = document.querySelector('.popup__features');
+  fillFeatures(features, arrList);
+
+  var description = document.querySelector('.popup__description');
+  description.textContent = add.offer.description;
+
+  var photoCard = document.querySelector('.popup__photos');
+  var photo = photoCard.querySelector('img');
+  photo.src = PHOTOS[0];
+  for (var i = 1; i < PHOTOS.length; i++) {
+    var next = photo.cloneNode(true);
+    next.src = PHOTOS[i];
+    photoCard.appendChild(next);
+  }
+
+  var avatar = document.querySelector('.popup__avatar');
+  avatar.src = add.author.avatar;
+};
+
+var renderCard = function (add) {
+  var card = document.querySelector('#card');
+  var map = document.querySelector('.map');
+  var containerBefore = document.querySelector('.map__filters-container');
+  var advCard = generateCard(add[0], card);
+  map.insertBefore(advCard, containerBefore);
+};
+
 generateArray(OBJ_QUANTITY);
 generatePin(objList);
 drawPins(arrList);
+renderCard(arrList);
 
 // Убираем класс .map--faded у блока .map
 var map = document.querySelector('.map');
