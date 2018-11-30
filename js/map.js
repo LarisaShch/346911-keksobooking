@@ -149,31 +149,32 @@ var fillFeatures = function (features, arr) {
 };
 
 var generateCard = function (add) {
-  var title = document.querySelector('.popup__title');
+  var template = document.querySelector('#card').content;
+  var title = template.querySelector('.popup__title');
   title.textContent = add.offer.title;
 
-  var address = document.querySelector('.popup__text--address');
+  var address = template.querySelector('.popup__text--address');
   address.textContent = add.offer.address;
 
-  var price = document.querySelector('.popup__text--price');
+  var price = template.querySelector('.popup__text--price');
   price.textContent = add.offer.price + '₽/ночь';
 
-  var type = document.querySelector('.popup__type');
+  var type = template.querySelector('.popup__type');
   type.textContent = renderType(add.offer.type);
 
-  var room = document.querySelector('.popup__text--capacity');
+  var room = template.querySelector('.popup__text--capacity');
   room.textContent = add.offer.rooms + ' комнаты для ' + add.offer.guests + ' гостей';
 
-  var check = document.querySelector('.popup__text--time');
+  var check = template.querySelector('.popup__text--time');
   check.textContent = 'Заезд после ' + add.offer.checkin + ', выезд до ' + add.offer.checkout;
 
-  var features = document.querySelector('.popup__features');
-  fillFeatures(features, arrList);
+  var features = template.querySelector('.popup__features');
+  fillFeatures(features, objList);
 
-  var description = document.querySelector('.popup__description');
+  var description = template.querySelector('.popup__description');
   description.textContent = add.offer.description;
 
-  var photoCard = document.querySelector('.popup__photos');
+  var photoCard = template.querySelector('.popup__photos');
   var photo = photoCard.querySelector('img');
   photo.src = PHOTOS[0];
   for (var i = 1; i < PHOTOS.length; i++) {
@@ -182,7 +183,7 @@ var generateCard = function (add) {
     photoCard.appendChild(next);
   }
 
-  var avatar = document.querySelector('.popup__avatar');
+  var avatar = template.querySelector('.popup__avatar');
   avatar.src = add.author.avatar;
 };
 
@@ -199,5 +200,5 @@ drawPins(arrList);
 renderCard(arrList);
 
 // Убираем класс .map--faded у блока .map
-var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+var maps = document.querySelector('.map');
+maps.classList.remove('map--faded');
