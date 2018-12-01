@@ -185,6 +185,8 @@ var generateCard = function (add) {
 
   var avatar = template.querySelector('.popup__avatar');
   avatar.src = add.author.avatar;
+
+  return template;
 };
 
 var renderCard = function (add) {
