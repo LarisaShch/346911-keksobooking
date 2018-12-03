@@ -150,31 +150,32 @@ var fillFeatures = function (features, arr) {
 
 var generateCard = function (add) {
   var template = document.querySelector('#card').content;
+  var element = template.cloneNode(true);
   var title = template.querySelector('.popup__title');
   title.textContent = add.offer.title;
 
-  var address = template.querySelector('.popup__text--address');
+  var address = element.querySelector('.popup__text--address');
   address.textContent = add.offer.address;
 
-  var price = template.querySelector('.popup__text--price');
+  var price = element.querySelector('.popup__text--price');
   price.textContent = add.offer.price + '₽/ночь';
 
-  var type = template.querySelector('.popup__type');
+  var type = element.querySelector('.popup__type');
   type.textContent = renderType(add.offer.type);
 
-  var room = template.querySelector('.popup__text--capacity');
+  var room = element.querySelector('.popup__text--capacity');
   room.textContent = add.offer.rooms + ' комнаты для ' + add.offer.guests + ' гостей';
 
-  var check = template.querySelector('.popup__text--time');
+  var check = element.querySelector('.popup__text--time');
   check.textContent = 'Заезд после ' + add.offer.checkin + ', выезд до ' + add.offer.checkout;
 
-  var features = template.querySelector('.popup__features');
+  var features = element.querySelector('.popup__features');
   fillFeatures(features, objList);
 
-  var description = template.querySelector('.popup__description');
+  var description = element.querySelector('.popup__description');
   description.textContent = add.offer.description;
 
-  var photoCard = template.querySelector('.popup__photos');
+  var photoCard = element.querySelector('.popup__photos');
   var photo = photoCard.querySelector('img');
   photo.src = PHOTOS[0];
   for (var i = 1; i < PHOTOS.length; i++) {
@@ -183,10 +184,10 @@ var generateCard = function (add) {
     photoCard.appendChild(next);
   }
 
-  var avatar = template.querySelector('.popup__avatar');
+  var avatar = element.querySelector('.popup__avatar');
   avatar.src = add.author.avatar;
 
-  return template;
+  return element;
 };
 
 var renderCard = function (add) {
@@ -194,6 +195,30 @@ var renderCard = function (add) {
   var containerBefore = document.querySelector('.map__filters-container');
   var advCard = generateCard(add[0]);
   map.insertBefore(advCard, containerBefore);
+
+  var close = document.querySelector('.popup__close');
+  close.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    deleteMap();
+  });
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+      deleteMap();
+    }
+  });
+};
+/*var addShowCardListener = function (pin, advertisement) {
+  pin.addEventListener('click', function (event) {
+    event.preventDefault();
+    renderCard(advertisement);
+  });
+};*/
+
+var deleteMap = function () {
+  var mapCard = document.querySelector('.map__card');
+  if (mapCard !== null) {
+    mapCard.remove();
+  }
 };
 
 generateArray(OBJ_QUANTITY);
