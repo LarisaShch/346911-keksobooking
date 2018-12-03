@@ -207,12 +207,6 @@ var renderCard = function (add) {
     }
   });
 };
-/*var addShowCardListener = function (pin, advertisement) {
-  pin.addEventListener('click', function (event) {
-    event.preventDefault();
-    renderCard(advertisement);
-  });
-};*/
 
 var deleteMap = function () {
   var mapCard = document.querySelector('.map__card');
