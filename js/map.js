@@ -46,6 +46,12 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
 
+var form = document.querySelector('.ad-form');
+var formSpace = form.querySelectorAll('fieldset');
+var filtersForm = document.querySelector('.map__filters');
+var filterSelector = filtersForm.querySelectorAll('.map__filter');
+var filterFeatures = filtersForm.querySelector('fieldset');
+
 
 var getRandomNumber = function (min, max) {
   var random = min + Math.random() * (max + 1 - min);
@@ -194,6 +200,7 @@ var renderCard = function (add) {
   var map = document.querySelector('.map');
   var containerBefore = document.querySelector('.map__filters-container');
   var advCard = generateCard(add[0]);
+  deleteMap();
   map.insertBefore(advCard, containerBefore);
 
   var close = document.querySelector('.popup__close');
@@ -215,11 +222,52 @@ var deleteMap = function () {
   }
 };
 
+var addShowCard= function (pin, add) {
+  pin.addEventListener('click', function (event) {
+    event.preventDefault();
+    renderCard(add);
+  });
+};
+
+var disableElements = function (elementList) {
+  elementList.forEach(function (element) {
+    element.setAttribute('disabled', 'disabled');
+  });
+};
+
+var enableElements = function (element) {
+  element.forEach(function (elements) {
+    elements.removeAttribute('disabled');
+  });
+};
+
+var pinButton = document.querySelector('.map__pin--main');
+var map = document.querySelector('.map');
+pinButton.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  map.classList.remove('map--faded');
+  form.classList.remove('ad-form--disabled');
+  enableElements(formSpace);
+  enableElements(filterSelector);
+  filterFeatures.removeAttribute('disabled');
+  drawPins(arrList);
+  var mapPin = document.querySelectorAll('.map__pin');
+  for (var i = 1; i < mapPin.length; i++) {
+    addShowCard(mapPin[i], arrList[i - 1]);
+  }
+});
+
+disableElements(formSpace);
+disableElements(filterSelector);
+
+// Заполнение  адреса
+
+var addres = document.querySelector('#address');
+var buttonX = parseInt(pinButton.style.left.replace('px', ''), 10) + 32;
+var buttonY = parseInt(pinButton.style.top.replace('px', ''), 10) + 84;
+addres.value = buttonX + ', ' + buttonY;
+
 generateArray(OBJ_QUANTITY);
 generatePin(objList);
 drawPins(arrList);
 renderCard(arrList);
-
-// Убираем класс .map--faded у блока .map
-var maps = document.querySelector('.map');
-maps.classList.remove('map--faded');
