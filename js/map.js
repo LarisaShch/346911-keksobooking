@@ -222,13 +222,13 @@ var deleteMap = function () {
   }
 };
 
-var addShowCard= function (pin, add) {
+/* var addShowCard= function (pin, add) {
   pin.addEventListener('click', function (event) {
     event.preventDefault();
     renderCard(add);
   });
 };
-
+*/
 var disableElements = function (elementList) {
   elementList.forEach(function (element) {
     element.setAttribute('disabled', 'disabled');
@@ -253,7 +253,7 @@ pinButton.addEventListener('click', function (evt) {
   drawPins(arrList);
   var mapPin = document.querySelectorAll('.map__pin');
   for (var i = 1; i < mapPin.length; i++) {
-    addShowCard(mapPin[i], arrList[i - 1]);
+  // addShowCard(mapPin[i], arrList[i - 1]);
   }
 });
 
