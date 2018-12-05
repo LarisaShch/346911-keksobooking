@@ -117,12 +117,12 @@ var arrList = generateArray();
 // console.log(arrList);
 
 // DOM-элементы для меток
-var generatePin = function (add) {
+var generatePin = function (pin) {
   var template = document.querySelector('#pin').content.querySelector('.map__pin');
   var element = template.cloneNode(true);
-  element.style = 'left: ' + add.location.x + 'px; top: ' + add.location.y + 'px;';
-  element.querySelector('img').src = add.author.avatar;
-  element.querySelector('img').alt = add.offer.title;
+  element.style = 'left: ' + pin.location.x + 'px; top: ' + pin.location.y + 'px;';
+  element.querySelector('img').src = pin.author.avatar;
+  element.querySelector('img').alt = pin.offer.title;
   return element;
 };
 // Отрисовка
@@ -134,14 +134,14 @@ var drawPins = function (add) {
   }
 };
 
-var renderType = function () {
-  var types = {
+ var renderType = function () {
+  var type = {
     palace: 'Дворец',
     flat: 'Квартира',
     house: 'Дом',
     bungalo: 'Бунгало'
   };
-  return types;
+  return type;
 };
 
 var fillFeatures = function (features, arr) {
@@ -154,32 +154,33 @@ var fillFeatures = function (features, arr) {
   }
 };
 
-var generateCard = function (add) {
+var generateCard = function (card) {
   var template = document.querySelector('#card').content;
   var element = template.cloneNode(true);
-  var title = template.querySelector('.popup__title');
-  title.textContent = add.offer.title;
+
+  var title = element.querySelector('.popup__title');
+  title.textContent = card.offer.title;
 
   var address = element.querySelector('.popup__text--address');
-  address.textContent = add.offer.address;
+  address.textContent = card.offer.address;
 
   var price = element.querySelector('.popup__text--price');
-  price.textContent = add.offer.price + '₽/ночь';
+  price.textContent = card.offer.price + '₽/ночь';
 
   var type = element.querySelector('.popup__type');
-  type.textContent = renderType(add.offer.type);
+  type.textContent = renderType(card.offer.type);
 
   var room = element.querySelector('.popup__text--capacity');
-  room.textContent = add.offer.rooms + ' комнаты для ' + add.offer.guests + ' гостей';
+  room.textContent = card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей';
 
   var check = element.querySelector('.popup__text--time');
-  check.textContent = 'Заезд после ' + add.offer.checkin + ', выезд до ' + add.offer.checkout;
+  check.textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
 
   var features = element.querySelector('.popup__features');
   fillFeatures(features, objList);
 
   var description = element.querySelector('.popup__description');
-  description.textContent = add.offer.description;
+  description.textContent = card.offer.description;
 
   var photoCard = element.querySelector('.popup__photos');
   var photo = photoCard.querySelector('img');
@@ -191,15 +192,15 @@ var generateCard = function (add) {
   }
 
   var avatar = element.querySelector('.popup__avatar');
-  avatar.src = add.author.avatar;
+  avatar.src = card.author.avatar;
 
   return element;
 };
 
-var renderCard = function (add) {
+var renderCard = function (card) {
   var map = document.querySelector('.map');
   var containerBefore = document.querySelector('.map__filters-container');
-  var advCard = generateCard(add[0]);
+  var advCard = generateCard(card);
   deleteMap();
   map.insertBefore(advCard, containerBefore);
 
@@ -222,13 +223,13 @@ var deleteMap = function () {
   }
 };
 
-/* var addShowCard= function (pin, add) {
+var addShowCard = function (pin, add) {
   pin.addEventListener('click', function (event) {
     event.preventDefault();
     renderCard(add);
   });
 };
-*/
+
 var disableElements = function (elementList) {
   elementList.forEach(function (element) {
     element.setAttribute('disabled', 'disabled');
@@ -253,7 +254,7 @@ pinButton.addEventListener('click', function (evt) {
   drawPins(arrList);
   var mapPin = document.querySelectorAll('.map__pin');
   for (var i = 1; i < mapPin.length; i++) {
-  // addShowCard(mapPin[i], arrList[i - 1]);
+    addShowCard(mapPin[i], arrList[i - 1]);
   }
 });
 
@@ -269,5 +270,3 @@ addres.value = buttonX + ', ' + buttonY;
 
 generateArray(OBJ_QUANTITY);
 generatePin(objList);
-drawPins(arrList);
-renderCard(arrList);
