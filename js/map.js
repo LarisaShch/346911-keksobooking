@@ -134,7 +134,7 @@ var drawPins = function (add) {
   }
 };
 
- var renderType = function () {
+var renderType = function () {
   var type = {
     palace: 'Дворец',
     flat: 'Квартира',
