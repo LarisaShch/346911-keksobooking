@@ -85,7 +85,7 @@ var generateObj = function () {
       title: getRandomItem(LIST_TITLE),
       address: getRandomNumber(250, 850) + ', ' + getRandomNumber(130, 630),
       price: getRandomNumber(1000, 1000000),
-      type: getRandomIndex(TYPES),
+      type: TYPES[getRandomNumber(0, 3)],
       rooms: getRandomNumber(1, 5),
       guests: getRandomNumber(1, 10),
       checkin: getRandomIndex(CHECKIN),
@@ -134,22 +134,13 @@ var drawPins = function (add) {
   }
 };
 
-var renderType = function () {
-  var type = {
-    palace: 'Дворец',
-    flat: 'Квартира',
-    house: 'Дом',
-    bungalo: 'Бунгало'
-  };
-  return type;
-};
 
-var fillFeatures = function (features, arr) {
+var fillFeatures = function (features, card) {
   features.innerHTML = '';
-  for (var i = 0; i < arr.offer.features.length; i++) {
+  for (var i = 0; i < card.offer.features.length; i++) {
     var cardFeaturesItem = document.createElement('li');
     cardFeaturesItem.classList.add('popup__feature');
-    cardFeaturesItem.classList.add('popup__feature--' + arr.offer.features[i]);
+    cardFeaturesItem.classList.add('popup__feature--' + card.offer.features[i]);
     features.appendChild(cardFeaturesItem);
   }
 };
@@ -168,6 +159,20 @@ var generateCard = function (card) {
   price.textContent = card.offer.price + '₽/ночь';
 
   var type = element.querySelector('.popup__type');
+
+  var renderType = function () {
+    switch (card.offer.type) {
+      case 'flat':
+        return 'Квартира';
+      case 'bungalo':
+        return 'Бунгало';
+      case 'house':
+        return 'Дом';
+      case 'palace':
+        return 'Дворец';
+    }
+    return card.offer.type;
+  };
   type.textContent = renderType(card.offer.type);
 
   var room = element.querySelector('.popup__text--capacity');
@@ -177,7 +182,11 @@ var generateCard = function (card) {
   check.textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
 
   var features = element.querySelector('.popup__features');
-  fillFeatures(features, objList);
+  if (card.offer.features.length) {
+    fillFeatures(features, card);
+  } else {
+    hidenElement(features);
+  }
 
   var description = element.querySelector('.popup__description');
   description.textContent = card.offer.description;
@@ -195,6 +204,9 @@ var generateCard = function (card) {
   avatar.src = card.author.avatar;
 
   return element;
+};
+var hidenElement = function (element) {
+  element.classList.add('hidden');
 };
 
 var renderCard = function (card) {
