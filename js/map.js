@@ -280,5 +280,29 @@ var buttonX = parseInt(pinButton.style.left.replace('px', ''), 10) + 32;
 var buttonY = parseInt(pinButton.style.top.replace('px', ''), 10) + 84;
 addres.value = buttonX + ', ' + buttonY;
 
+// Проверка количества комнат и количества гостей
+
+var roomCapacity = document.querySelector('#capacity');
+var roomNumber = document.querySelector('#room_number');
+
+var checkRoom = function () {
+  var roomNumberValue = parseInt(roomNumber.value, 10);
+  var roomCapacityValue = parseInt(roomCapacity.value, 10);
+  if (roomNumberValue < roomCapacityValue || roomNumberValue !== 100 && roomCapacityValue === 0) {
+    roomCapacity.setCustomValidity('Слишком мало комнат.');
+  } else if (roomNumberValue === 100 && roomCapacityValue !== 0) {
+    roomCapacity.setCustomValidity('Вы уверены?');
+  } else {
+    roomCapacity.setCustomValidity('');
+  }
+};
+roomNumber.addEventListener('change', function () {
+  checkRoom();
+});
+roomCapacity.addEventListener('change', function () {
+  checkRoom();
+});
+
+
 generateArray(OBJ_QUANTITY);
 generatePin(objList);
