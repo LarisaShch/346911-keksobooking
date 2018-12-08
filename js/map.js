@@ -299,7 +299,7 @@ roomCapacity.addEventListener('change', function () {
 });
 
 
-// drag-n-drop
+//  drag-n-drop
 var mainPinWidth = mainPin.offsetWidth;
 var mainPinStartHeight = mainPin.offsetHeight;
 var mainPinHeight = mainPinStartHeight + 22;
