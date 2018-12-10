@@ -324,12 +324,7 @@ var getLimit = function (value, min, max) {
 
   return value;
 };
-var pinCoords = function (coords) {
-  coords.x = getLimit(coords.x, pinsLimits.MIN_X, pinsLimits.MAX_X);
-  coords.y = getLimit(coords.y, pinsLimits.MIN_Y, pinsLimits.MAX_Y);
 
-  return coords;
-};
 
 mainPin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
@@ -342,14 +337,17 @@ mainPin.addEventListener('mousedown', function (evt) {
   var onMouseMove = function (moveEvt) {
     moveEvt.preventDefault();
 
+    var pinCoords = function () {
+      var newCoords = {};
+      newCoords.x = getLimit(mainPin.offsetLeft - coord.x, pinsLimits.MIN_X, pinsLimits.MAX_X);
+      newCoords.y = getLimit(mainPin.offsetTop - coord.y, pinsLimits.MIN_Y, pinsLimits.MAX_Y);
+
+      return newCoords;
+    };
+
     var coord = {
       x: startCoord.x - moveEvt.clientX,
       y: startCoord.y - moveEvt.clientY
-    };
-
-    var resultCoord = {
-      x: mainPin.offsetLeft - coord.x,
-      y: mainPin.offsetTop - coord.y
     };
 
     startCoord = {
@@ -357,7 +355,7 @@ mainPin.addEventListener('mousedown', function (evt) {
       y: moveEvt.clientY
     };
 
-    pinCoords(resultCoord);
+    var resultCoord = pinCoords();
 
     mainPin.style.top = resultCoord.y + 'px';
     mainPin.style.left = resultCoord.x + 'px';
