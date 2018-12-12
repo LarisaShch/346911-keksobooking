@@ -52,6 +52,7 @@
     formSpace: formSpace,
     filterSelector: filterSelector,
     pinButton: pinButton,
-    map: map
+    map: map,
+    form: form
   };
 })();
