@@ -47,6 +47,7 @@
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
   ];
 
+
   var getRandomNumber = function (min, max) {
     var random = min + Math.random() * (max + 1 - min);
     random = Math.floor(random);
@@ -113,6 +114,7 @@
   window.data = {
     objList: objList,
     arrList: arrList,
-    PHOTOS: PHOTOS
+    PHOTOS: PHOTOS,
+    OBJ_QUANTITY: OBJ_QUANTITY
   };
 })();

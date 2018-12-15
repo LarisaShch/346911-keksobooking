@@ -6,6 +6,21 @@
   var filterSelector = filtersForm.querySelectorAll('.map__filter');
   var filterFeatures = filtersForm.querySelector('fieldset');
 
+  var objectsData = {};
+
+  window.backend.getData(getDataSuccess, getDataError);
+
+  function getDataSuccess(data) {
+    objectsData = data;
+  }
+
+  function getDataError(data) {
+    renderErrorMessage(data);
+  }
+
+  function renderErrorMessage(data) {
+    document.querySelector('.map').textContent = data;
+  }
 
   // DOM-элементы для меток
   var generatePin = function (pin) {
@@ -17,11 +32,10 @@
     return element;
   };
   // Отрисовка
-  var drawPins = function (add) {
+  var drawPins = function () {
     var map = document.querySelector('.map__pins');
-    for (var i = 0; i < add.length; i++) {
-      var pin = generatePin(add[i]);
-      map.appendChild(pin);
+    for (var i = 0; i < window.data.OBJ_QUANTITY; i++) {
+      map.appendChild(generatePin(objectsData[i]));
     }
   };
 
@@ -52,6 +66,8 @@
     formSpace: formSpace,
     filterSelector: filterSelector,
     pinButton: pinButton,
-    map: map
+    map: map,
+    form: form
   };
+
 })();
