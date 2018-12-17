@@ -3,7 +3,7 @@
   var roomCapacity = document.querySelector('#capacity');
   var roomNumber = document.querySelector('#room_number');
   var addressField = document.querySelector('#address');
-  var fieldsets = window.pin.form.querySelectorAll('fieldset');
+  var fieldsets = window.map.form.querySelectorAll('fieldset');
 
   var apartmentTypeToPriceMap = {
     bungalo: 0,
@@ -13,11 +13,11 @@
   };
 
   var customValidityMessage = '';
-  var titleInput = window.pin.form.querySelector('#title');
-  var priceInput = window.pin.form.querySelector('#price');
-  var timeInInput = window.pin.form.querySelector('#timein');
-  var timeOutInput = window.pin.form.querySelector('#timeout');
-  var apartmentType = window.pin.form.querySelector('#type');
+  var titleInput = window.map.form.querySelector('#title');
+  var priceInput = window.map.form.querySelector('#price');
+  var timeInInput = window.map.form.querySelector('#timein');
+  var timeOutInput = window.map.form.querySelector('#timeout');
+  var apartmentType = window.map.form.querySelector('#type');
 
   addressField.readOnly = true;
   initHandlers();
@@ -29,7 +29,7 @@
     apartmentType.addEventListener('change', onApartmentTypeChange);
     timeInInput.addEventListener('change', onTimeInInputChange);
     timeOutInput.addEventListener('change', onTimeOutInputChange);
-    window.pin.form.addEventListener('submit', onFormSubmit);
+    window.map.form.addEventListener('submit', onFormSubmit);
   }
 
   function checkPriceInputValidity(input) {
@@ -83,7 +83,7 @@
   }
 
   function sendData(evt) {
-    window.backend.postData(new FormData(evt.currentTarget), onPostDataSuccess, onPostDataError);
+    window.backend.upload(new FormData(evt.currentTarget), onPostDataSuccess, onPostDataError);
     evt.preventDefault();
   }
 

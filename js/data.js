@@ -98,7 +98,6 @@
     };
   };
   var objList = generateObj();
-  // console.log(obj);
 
   var generateArray = function () {
     var result = [];
@@ -110,7 +109,7 @@
   };
   var arrList = generateArray();
   generateArray(OBJ_QUANTITY);
-
+  // console.log(arrList);
   window.data = {
     objList: objList,
     arrList: arrList,

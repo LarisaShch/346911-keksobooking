@@ -113,8 +113,8 @@
     });
   };
 
-  disableElements(window.pin.formSpace);
-  disableElements(window.pin.filterSelector);
+  disableElements(window.map.formSpace);
+  disableElements(window.map.filterSelector);
 
   window.card = {
     addShowCard: addShowCard
