@@ -56,7 +56,7 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      window.backend.load(window.pin.drawPins, alert);
+      window.backend.load(window.pin.successHandler, alert);
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
