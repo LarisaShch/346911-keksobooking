@@ -73,6 +73,7 @@
     filterSelector: filterSelector,
     map: map,
     form: form,
-    pinButton: pinButton
+    pinButton: pinButton,
+    updateAddressField: updateAddressField
   };
 })();

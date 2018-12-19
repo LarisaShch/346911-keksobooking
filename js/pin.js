@@ -34,12 +34,11 @@
       return 'offer' in item;
     });
 
-    var template = document.querySelector('#pin');
     var mapPins = document.querySelector('.map__pins');
     var allPin = document.querySelectorAll('.map__pin');
     if (allPin.length === 1) {
       for (var i = 0; i < PINS_COUNT; i++) {
-        var pin = generatePin(advWithOffer[i], template);
+        var pin = generatePin(advWithOffer[i]);
         mapPins.appendChild(pin);
       }
     }
@@ -48,6 +47,7 @@
       window.card.addShowCard(mapPin[i], advWithOffer[i - 1]);
     }
   };
+
   var filterAdvertisement = function (advertisements) {
     var selectedHousingFeatures = [];
     housingFeature.forEach(function (item) {
@@ -75,13 +75,13 @@
         }
         return false;
       });
-
     }
     if (housingRoom.value !== 'any') {
       advWithOffer = advWithOffer.filter(function (item) {
-        return item.offer.rooms === housingRoom.value;
+        return item.offer.rooms === +housingRoom.value;
       });
     }
+
     if (housingGuests.value !== 'any') {
       advWithOffer = advWithOffer.filter(function (item) {
         return item.offer.guests === parseInt(housingGuests.value, 10);
@@ -139,6 +139,7 @@
   window.pin = {
     drawPins: drawPins,
     enableElements: enableElements,
-    successHandler: successHandler
+    successHandler: successHandler,
+    clearMap: clearMap
   };
 })();

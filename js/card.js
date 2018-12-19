@@ -117,6 +117,7 @@
   disableElements(window.map.filterSelector);
 
   window.card = {
-    addShowCard: addShowCard
+    addShowCard: addShowCard,
+    disableElements: disableElements
   };
 })();
