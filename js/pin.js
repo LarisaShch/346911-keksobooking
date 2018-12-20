@@ -37,7 +37,7 @@
     var mapPins = document.querySelector('.map__pins');
     var allPin = document.querySelectorAll('.map__pin');
     if (allPin.length === 1) {
-      for (var i = 0; i < PINS_COUNT; i++) {
+      for (var i = 0; i < advertisements.length; i++) {
         var pin = generatePin(advWithOffer[i]);
         mapPins.appendChild(pin);
       }
