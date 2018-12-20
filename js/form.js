@@ -161,6 +161,7 @@
     errorButton.addEventListener('click', function () {
       errorMessage.remove();
     });
+
     document.addEventListener('click', function () {
       errorMessage.remove();
     });
