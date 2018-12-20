@@ -135,6 +135,21 @@
     main.appendChild(success);
   };
 
+  document.addEventListener('click', function () {
+    var successMessage = document.querySelector('.success');
+    if (successMessage) {
+      successMessage.remove();
+    }
+  });
+  document.addEventListener('keydown', function (evt) {
+    var successMessage = document.querySelector('.success');
+    if (evt.keyCode === 27) {
+      if (successMessage) {
+        successMessage.remove();
+      }
+    }
+  });
+
   var errorHandler = function () {
     var errorTemplate = document.querySelector('#error');
     var error = document.importNode(errorTemplate.content, true);
@@ -160,6 +175,7 @@
     evt.preventDefault();
     window.backend.upload(new FormData(form), function () {
       successHandler();
+      window.page.resetPage();
     }, errorHandler);
   });
 
