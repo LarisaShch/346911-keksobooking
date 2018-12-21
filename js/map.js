@@ -71,10 +71,10 @@
   window.map = {
     formSpace: formSpace,
     filterSelector: filterSelector,
+    filtersForm: filtersForm,
     map: map,
     form: form,
     pinButton: pinButton,
     updateAddressField: updateAddressField,
-    filtersForm: filtersForm
   };
 })();
