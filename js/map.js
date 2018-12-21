@@ -74,6 +74,7 @@
     map: map,
     form: form,
     pinButton: pinButton,
-    updateAddressField: updateAddressField
+    updateAddressField: updateAddressField,
+    filtersForm: filtersForm
   };
 })();

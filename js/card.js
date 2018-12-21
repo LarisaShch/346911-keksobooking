@@ -1,5 +1,11 @@
 'use strict';
 (function () {
+  var PHOTOS = [
+    'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+    'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+    'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
+  ];
+
   var fillFeatures = function (features, card) {
     features.innerHTML = '';
     for (var i = 0; i < card.offer.features.length; i++) {
@@ -58,10 +64,10 @@
 
     var photoCard = element.querySelector('.popup__photos');
     var photo = photoCard.querySelector('img');
-    photo.src = window.data.PHOTOS[0];
-    for (var i = 1; i < window.data.PHOTOS.length; i++) {
+    photo.src = PHOTOS[0];
+    for (var i = 1; i < PHOTOS.length; i++) {
       var next = photo.cloneNode(true);
-      next.src = window.data.PHOTOS[i];
+      next.src = PHOTOS[i];
       photoCard.appendChild(next);
     }
 
