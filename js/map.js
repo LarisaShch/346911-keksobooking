@@ -1,7 +1,10 @@
 'use strict';
 //  drag-n-drop
-
 (function () {
+  var LEFT_LIMIT = 130;
+  var RIGHT_LIMIT = 630;
+  var LEFT_GAP_VALUE = 32;
+  var TOP_GAP_VALUE = 84;
   var form = document.querySelector('.ad-form');
   var formSpace = form.querySelectorAll('fieldset');
   var filtersForm = document.querySelector('.map__filters');
@@ -11,8 +14,8 @@
 
   var updateAddressField = function () {
     var address = document.querySelector('#address');
-    var buttonX = parseInt(pinButton.style.left.replace('px', ''), 10) + 32;
-    var buttonY = parseInt(pinButton.style.top.replace('px', ''), 10) + 84;
+    var buttonX = parseInt(pinButton.style.left.replace('px', ''), window.pin.MIN_VAL) + LEFT_GAP_VALUE;
+    var buttonY = parseInt(pinButton.style.top.replace('px', ''), window.pin.MIN_VAL) + TOP_GAP_VALUE;
     address.value = buttonX + ', ' + buttonY;
   };
   var pinButton = document.querySelector('.map__pin--main');
@@ -44,11 +47,11 @@
         y: moveEvt.clientY
       };
       var offsetTop = pinButton.offsetTop - shift.y;
-      if (offsetTop >= 130 && offsetTop <= 630) {
+      if (offsetTop >= LEFT_LIMIT && offsetTop <= RIGHT_LIMIT) {
         pinButton.style.top = offsetTop + 'px';
       }
       var offsetLeft = pinButton.offsetLeft - shift.x;
-      if (offsetLeft <= (map.offsetWidth - 32) && offsetLeft >= -32) {
+      if (offsetLeft <= (map.offsetWidth - LEFT_GAP_VALUE) && offsetLeft >= -LEFT_GAP_VALUE) {
         pinButton.style.left = pinButton.offsetLeft - shift.x + 'px';
       }
       updateAddressField();

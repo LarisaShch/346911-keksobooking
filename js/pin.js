@@ -1,6 +1,11 @@
 'use strict';
 (function () {
   var PINS_COUNT = 5;
+  var LEFT_GAP = 25;
+  var TOP_GAP = 70;
+  var LOW_PRICE = 10000;
+  var HIGH_PRICE = 50000;
+  var MIN_VAL = 10;
 
   var filtersForm = document.querySelector('.map__filters');
   var housingType = document.querySelector('#housing-type');
@@ -21,8 +26,8 @@
     var element = document.querySelector('#pin').content;
     var pin = element.cloneNode(true);
     var button = pin.querySelector('button');
-    button.style.left = advertisement.location.x - 25 + 'px';
-    button.style.top = advertisement.location.y - 70 + 'px';
+    button.style.left = advertisement.location.x - LEFT_GAP + 'px';
+    button.style.top = advertisement.location.y - TOP_GAP + 'px';
     var image = pin.querySelector('img');
     image.src = advertisement.author.avatar;
     image.alt = advertisement.offer.title;
@@ -67,11 +72,11 @@
       advWithOffer = advWithOffer.filter(function (item) {
         switch (housingPrice.value) {
           case 'low':
-            return item.offer.price < 10000;
+            return item.offer.price < LOW_PRICE;
           case 'middle':
-            return item.offer.price >= 10000 && item.offer.price < 50000;
+            return item.offer.price >= LOW_PRICE && item.offer.price < HIGH_PRICE;
           case 'high':
-            return item.offer.price >= 50000;
+            return item.offer.price >= HIGH_PRICE;
         }
         return false;
       });
@@ -84,7 +89,7 @@
 
     if (housingGuests.value !== 'any') {
       advWithOffer = advWithOffer.filter(function (item) {
-        return item.offer.guests === parseInt(housingGuests.value, 10);
+        return item.offer.guests === parseInt(housingGuests.value, MIN_VAL);
       });
     }
     advWithOffer = advWithOffer.filter(function (item) {
@@ -140,6 +145,7 @@
     drawPins: drawPins,
     enableElements: enableElements,
     successHandler: successHandler,
-    clearMap: clearMap
+    clearMap: clearMap,
+    MIN_VAL: MIN_VAL
   };
 })();

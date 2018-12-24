@@ -18,6 +18,8 @@
   var timeInInput = window.map.form.querySelector('#timein');
   var timeOutInput = window.map.form.querySelector('#timeout');
   var apartmentType = window.map.form.querySelector('#type');
+  var MAX_ROOM = 100;
+  var MIN_ROOM = 0;
 
   addressField.readOnly = true;
   initHandlers();
@@ -55,11 +57,11 @@
   }
 
   var checkRoom = function () {
-    var roomNumberValue = parseInt(roomNumber.value, 10);
-    var roomCapacityValue = parseInt(roomCapacity.value, 10);
-    if (roomNumberValue < roomCapacityValue || roomNumberValue !== 100 && roomCapacityValue === 0) {
+    var roomNumberValue = parseInt(roomNumber.value, window.pin.MIN_VAL);
+    var roomCapacityValue = parseInt(roomCapacity.value, window.pin.MIN_VAL);
+    if (roomNumberValue < roomCapacityValue || roomNumberValue !== MAX_ROOM && roomCapacityValue === MIN_ROOM) {
       roomCapacity.setCustomValidity('Слишком мало комнат.');
-    } else if (roomNumberValue === 100 && roomCapacityValue !== 0) {
+    } else if (roomNumberValue === MAX_ROOM && roomCapacityValue !== MIN_ROOM) {
       roomCapacity.setCustomValidity('Вы уверены?');
     } else {
       roomCapacity.setCustomValidity('');
@@ -143,7 +145,7 @@
   });
   document.addEventListener('keydown', function (evt) {
     var successMessage = document.querySelector('.success');
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === window.card.KEY_COD_ESC) {
       if (successMessage) {
         successMessage.remove();
       }
@@ -166,7 +168,7 @@
       errorMessage.remove();
     });
     document.addEventListener('keydown', function (evt) {
-      if (evt.keydown === 27) {
+      if (evt.keydown === window.card.KEY_COD_ESC) {
         errorMessage.remove();
       }
     });
