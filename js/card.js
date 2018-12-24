@@ -1,11 +1,6 @@
 'use strict';
 (function () {
-  var PHOTOS = [
-    'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-    'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-    'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
-  ];
-
+  var KEY_COD_ESC = 'Escape';
   var fillFeatures = function (features, card) {
     features.innerHTML = '';
     for (var i = 0; i < card.offer.features.length; i++) {
@@ -63,12 +58,16 @@
     description.textContent = card.offer.description;
 
     var photoCard = element.querySelector('.popup__photos');
-    var photo = photoCard.querySelector('img');
-    photo.src = PHOTOS[0];
-    for (var i = 1; i < PHOTOS.length; i++) {
-      var next = photo.cloneNode(true);
-      next.src = PHOTOS[i];
-      photoCard.appendChild(next);
+    if ('photos' in card.offer && card.offer.photos.length > 0) {
+      var photo = photoCard.querySelector('img');
+      photo.src = card.offer.photos[0];
+      for (var i = 1; i < card.offer.photos.length; i++) {
+        var next = photo.cloneNode(true);
+        next.src = card.offer.photos[i];
+        photoCard.appendChild(next);
+      }
+    } else {
+      photoCard.remove();
     }
 
     var avatar = element.querySelector('.popup__avatar');
@@ -86,17 +85,18 @@
     var advCard = generateCard(card);
     deleteMap();
     map.insertBefore(advCard, containerBefore);
-
     var close = document.querySelector('.popup__close');
+    var escapeHandler = function (evt) {
+      if (evt.code === KEY_COD_ESC) {
+        deleteMap();
+        document.removeEventListener('keydown', escapeHandler);
+      }
+    };
     close.addEventListener('click', function (evt) {
       evt.preventDefault();
       deleteMap();
     });
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === 27) {
-        deleteMap();
-      }
-    });
+    document.addEventListener('keydown', escapeHandler);
   };
 
   var deleteMap = function () {
@@ -124,6 +124,7 @@
 
   window.card = {
     addShowCard: addShowCard,
-    disableElements: disableElements
+    disableElements: disableElements,
+    KEY_COD_ESC: KEY_COD_ESC
   };
 })();
